@@ -1,87 +1,125 @@
-# CampusShelf — Library Management System
+<div align="center">
 
-A web-based library management system built with plain **HTML, CSS and JavaScript**. It has separate Librarian and Student sides, automatic late fines, a reservation waitlist and printable issue slips. No server or database is needed; data is saved in the browser using `localStorage`.
+# 📚 CampusShelf
 
-**Live demo:** `https://<your-username>.github.io/Library-Management-System/`
+### A smart Library Management System for your campus
 
-## Features
+*Two roles · Late fines · Waitlist · Printable issue slips*
 
-### Librarian
-- **Dashboard** with live stats (titles, copies, available, issued, overdue, pending fines), copies by department, most borrowed books and recent activity
-- **Book management**: add, edit, delete, search and filter by department and semester
-- **Issue / Return** books with a 14-day loan period
-- **Waitlist** view to monitor and manage reservations
-- **Fines** page with a "Mark paid" option
-- **Members** list showing books held and fines due
-- Export all issue records to **CSV**
+![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![GitHub Pages](https://img.shields.io/badge/Hosted_on-GitHub_Pages-0f766e?style=for-the-badge&logo=github&logoColor=white)
 
-### Student
-- Register and log in with a personal account
-- **Browse** books as cover cards, filtered by department and semester
-- **Borrow** a book, or **join the waitlist** when all copies are out
-- **My books** with due dates, days left, and reading history
-- **My fines** showing late charges
-- **Printable issue slip** with a QR-style code
+### 🌐 [**View Live Demo**](https://avikdey78.github.io/Library-management-system/)
 
-### Smart rules
-- **Late fine:** ₹2 per day after the due date, calculated on return
-- **Waitlist hold:** when a book is returned, the copy is held for the first student in the queue and no one else can borrow it
-- **Borrow limit:** a student can hold at most 3 books at a time
-- Duplicate-borrow and no-stock checks, plus protection against deleting books that are still issued
-- Dark and light theme toggle, fully responsive layout
+</div>
 
-## Demo accounts
+---
+
+## ✨ Why CampusShelf?
+
+Most library demos only show a book list. CampusShelf runs the **whole borrowing cycle** — browse, borrow, wait, return, pay fines — with separate screens for the **Librarian** and the **Student**.
+
+| 🔐 Two Roles | 💸 Auto Fines | ⏳ Smart Waitlist | 🧾 Issue Slips |
+|:---:|:---:|:---:|:---:|
+| Librarian & Student dashboards | ₹2 per late day, calculated on return | Returned copy is held for the first in queue | Printable slip with QR-style code |
+
+---
+
+## 🔄 How it works
+
+```mermaid
+flowchart LR
+    A["🔎 Student browses"] --> B{"Copy free?"}
+    B -- Yes --> C["📖 Borrow + slip"]
+    B -- No --> D["⏳ Join waitlist"]
+    C --> E["↩️ Return book"]
+    E --> F{"Late?"}
+    F -- Yes --> G["💸 Fine: ₹2/day"]
+    F -- No --> H["✅ Done"]
+    E --> I["📌 Copy held for first in waitlist"]
+    D --> I
+    I --> C
+```
+
+---
+
+## 🎯 Features
+
+### 👩‍💼 Librarian
+- 📊 **Dashboard** — live stats, copies by department, most borrowed books, recent activity
+- 📚 **Book management** — add, edit, delete, search, filter by department & semester
+- 🔁 **Issue / Return** — 14-day loan period with overdue highlighting
+- ⏳ **Waitlist** control and 💸 **Fines** page with *Mark paid*
+- 👥 **Members** overview and ⬇️ **CSV export** of all records
+
+### 🎓 Student
+- 📝 Register and log in with a personal account
+- 🔎 Browse colourful **cover cards** by department and semester
+- 📖 Borrow a book, or **join the waitlist** when copies run out
+- 🕒 **My books** with days left, reading history and **My fines**
+- 🖨️ Print an **issue slip** for every borrowed book
+
+### 🧠 Smart rules
+- Max **3 books** per student at a time
+- Waitlisted copy is **held** — nobody else can take it
+- Cannot delete a book that is still issued
+- 🌙 Dark / ☀️ Light theme · 📱 fully responsive
+
+---
+
+## 🔑 Try it — demo accounts
 
 | Role | Username | Password |
-|---|---|---|
-| Librarian | `librarian` | `lib123` |
-| Student | `student` | `stud123` |
+|:---:|:---:|:---:|
+| 👩‍💼 Librarian | `librarian` | `lib123` |
+| 🎓 Student | `student` | `stud123` |
 
-New students can also register from the login screen. The **Reset demo data** button (librarian sidebar) restores the sample data.
+> 💡 The demo already has an **overdue book** (to see fines) and a **waitlist entry**. Use *Reset demo data* in the librarian sidebar to restore it anytime.
 
-## Project structure
+---
+
+## 🗂️ Project structure
 
 ```
-Library-Management-System/
-├── index.html   # page shell
-├── style.css    # all styling (light/dark themes, responsive, print)
-└── script.js    # data, rules, pages and events
+Library-management-system/
+├── 📄 index.html    →  page shell
+├── 🎨 style.css     →  themes, layout, print styles
+└── ⚙️ script.js     →  data, rules, pages, events
 ```
 
-## How to run
+## 🚀 Run it
 
-**Locally:** download the three files into one folder and open `index.html` in any browser.
+**Locally** — download the files into one folder and open `index.html`.
 
-**On GitHub Pages:**
-1. Upload the files to the root of a public repository
-2. Go to **Settings → Pages**
-3. Choose **Deploy from a branch → main → / (root)** and save
-4. Open the link shown after 1–2 minutes
+**On GitHub Pages** — *Settings → Pages → Deploy from a branch → `main` → `/ (root)` → Save.*
 
-## How it works
+---
+
+## 🧮 Under the hood
 
 | Area | Logic |
 |---|---|
-| Storage | One JSON object (`books`, `members`, `issues`, `waitlist`) saved in `localStorage` |
-| Availability | `copies − active issues − copies held for waitlisted students` |
-| Fine | `max(0, return date − due date) × ₹2` |
-| Waitlist | Queue ordered by join date; on return, the first waiting student's entry becomes "ready" and holds a copy |
-| Slip | Print view shows only the slip; the code is generated from the issue details |
+| 💾 Storage | One JSON object (`books`, `members`, `issues`, `waitlist`) in `localStorage` |
+| 📦 Availability | `copies − active issues − copies held for waitlist` |
+| 💸 Fine | `max(0, return date − due date) × ₹2` |
+| ⏳ Waitlist | Ordered by join date; on return the first entry becomes *ready* and holds a copy |
 
-## Notes and limitations
-- Data lives in each visitor's browser only, so it is not shared between devices.
-- Passwords are stored in plain text in `localStorage`. This is acceptable for a college demo but not for real use. A production system would need a backend with hashed passwords.
-- The slip code is a visual QR-style pattern, not a scannable QR code.
+## ⚠️ Limitations
+- Data is stored **per browser** — not shared across devices
+- Passwords are stored as plain text in `localStorage` (fine for a demo, not for real use)
+- The slip code is a visual QR-style pattern, not a scannable QR
 
-## Possible future improvements
-- Backend and database (Node.js or Firebase) for shared data
-- Password hashing and real authentication
-- Email or SMS reminders for due dates
-- Scannable QR/barcode issue slips
+## 🔮 Future ideas
+- Backend + database (Node.js / Firebase) 🔐 hashed passwords
+- 📧 Due-date email reminders · 📷 scannable QR / barcode slips
 
-## Tech stack
-HTML5 · CSS3 (variables, grid, flexbox) · Vanilla JavaScript (ES6) · localStorage
+---
 
-## Author
-Avik Dey — CSE (AIML), IEM Kolkata
-IT Workshop (PCCCS382) project
+<div align="center">
+
+**Made with ❤️ by Avik Dey**
+CSE (AIML) · IEM Kolkata · IT Workshop (PCCCS382)
+
+</div>
